@@ -1,0 +1,26 @@
+---
+layout: layouts/base.njk
+pagination:
+  data: collections.categoryPages
+  size: 1
+  alias: catPage
+permalink: "/articles/{{ catPage.category.slug }}/{% if catPage.pageNumber > 1 %}page/{{ catPage.pageNumber }}/{% endif %}"
+eleventyComputed:
+  title: "{{ catPage.category.name }}の記事"
+---
+<section class="container section">
+  <h1 class="page-title">{{ catPage.category.name }}の記事</h1>
+  {% set activeSlug = catPage.category.slug %}
+  {% include "partials/category-filter.njk" %}
+  {% if catPage.items.length %}
+  <div class="card-grid">
+    {% asyncEach item in catPage.items %}{% include "partials/card.njk" %}{% endeach %}
+  </div>
+  {% else %}
+  <p class="empty">このカテゴリの記事はまだありません。</p>
+  {% endif %}
+  {% set current = catPage.pageNumber %}
+  {% set total = catPage.totalPages %}
+  {% set base = "/articles/" + catPage.category.slug + "/" %}
+  {% include "partials/pagination.njk" %}
+</section>

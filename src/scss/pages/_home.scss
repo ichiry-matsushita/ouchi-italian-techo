@@ -1,0 +1,68 @@
+@use "../base/tokens" as *;
+
+.hero {
+  padding-block: var(--space-8) var(--space-7);
+  background: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.hero__eyebrow {
+  margin-bottom: var(--space-3);
+  font-size: var(--fs-sm);
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  color: var(--color-accent);
+}
+
+.hero__title {
+  font-size: var(--fs-3xl);
+  letter-spacing: 0.06em;
+}
+
+.hero__lead {
+  max-width: 34em;
+  margin-top: var(--space-4);
+  font-size: var(--fs-lg);
+  color: var(--color-text-muted);
+}
+
+// カテゴリから探す
+.category-list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-3);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+
+  @include up($bp-md) { grid-template-columns: repeat(4, 1fr); gap: var(--space-4); }
+
+  a {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+    height: 100%;
+    padding: var(--space-5) var(--space-4);
+    color: var(--color-text);
+    text-decoration: none;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    transition: border-color 0.2s;
+
+    &:hover {
+      border-color: var(--color-accent);
+      .category-list__name { color: var(--color-accent); }
+    }
+  }
+}
+
+.category-list__name {
+  font-size: var(--fs-lg);
+  font-weight: 700;
+}
+
+.category-list__note {
+  font-size: var(--fs-sm);
+  color: var(--color-text-muted);
+}

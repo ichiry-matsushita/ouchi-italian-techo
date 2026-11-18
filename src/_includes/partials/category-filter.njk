@@ -1,0 +1,9 @@
+{# 使う側で activeSlug をセットする（"" = すべて） #}
+<nav class="category-filter" aria-label="カテゴリで絞り込み">
+  <ul>
+    <li><a href="/articles/"{% if not activeSlug %} aria-current="page"{% endif %}>すべて</a></li>
+    {% for cat in site.categories %}
+    <li><a href="/articles/{{ cat.slug }}/"{% if activeSlug == cat.slug %} aria-current="page"{% endif %}>{{ cat.name }}</a></li>
+    {% endfor %}
+  </ul>
+</nav>

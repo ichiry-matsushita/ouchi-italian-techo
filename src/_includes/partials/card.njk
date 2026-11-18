@@ -1,0 +1,21 @@
+{# 記事カード。item = collections.articles の要素 #}
+<article class="card">
+  <a class="card__link" href="{{ item.url }}">
+    <div class="card__thumb">
+      {% if item.data.eyecatch %}
+        {# カードはタイトルがリンク名になるので、写真は装飾扱い（alt=""）にする #}
+        {% articleImage item.data.eyecatch, "", item.inputPath, "card" %}
+      {% else %}
+        <span class="card__thumb-placeholder" aria-hidden="true"></span>
+      {% endif %}
+    </div>
+    <div class="card__body">
+      <p class="card__meta">
+        <span class="card__category">{{ item.data.category }}</span>
+        <time datetime="{{ item.date | isoDate }}">{{ item.date | jpDate }}</time>
+      </p>
+      <h3 class="card__title">{{ item.data.title }}</h3>
+      <p class="card__time">調理時間 {{ item.data.cookingTime }}分 ／ {{ item.data.servings }}人分</p>
+    </div>
+  </a>
+</article>

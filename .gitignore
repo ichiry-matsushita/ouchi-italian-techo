@@ -1,0 +1,18 @@
+node_modules/
+_site/
+.cache/
+
+# 原稿フォルダの写真は位置情報が残っている可能性があるので公開しない
+# （記事に取り込むときに scripts/import-photos.js がメタデータを消してコピーする）
+drafts/**/*.jpg
+drafts/**/*.jpeg
+drafts/**/*.png
+drafts/**/*.webp
+drafts/**/*.heic
+drafts/**/*.JPG
+drafts/**/*.JPEG
+drafts/**/*.PNG
+drafts/**/*.HEIC
+
+# Claude Code の個人設定
+.claude/settings.local.json

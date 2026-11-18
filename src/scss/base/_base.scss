@@ -1,0 +1,107 @@
+@use "tokens" as *;
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: var(--fs-base);
+  line-height: 1.85;
+  letter-spacing: 0.02em;
+  color: var(--color-text);
+  background: var(--color-bg);
+  overflow-wrap: anywhere;
+  line-break: strict;
+}
+
+img { display: block; max-width: 100%; height: auto; }
+
+h1, h2, h3, h4 { line-height: 1.45; font-weight: 700; margin: 0; }
+
+// 見出しなど短い文は、文節の途中で改行しないようにする（対応ブラウザのみ。非対応でも崩れない）
+h1, h2, h3, .hero__lead, .ingredients__name {
+  word-break: auto-phrase;
+  text-wrap: pretty;
+}
+
+p { margin: 0 0 1em; }
+p:last-child { margin-bottom: 0; }
+
+a { color: var(--color-accent); text-underline-offset: 0.2em; }
+a:hover { color: var(--color-accent-dark); }
+
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+  border-radius: var(--radius-sm);
+}
+
+.visually-hidden {
+  position: absolute !important;
+  width: 1px; height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.skip-link {
+  position: absolute;
+  left: var(--space-4);
+  top: -100px;
+  z-index: 10;
+  padding: var(--space-2) var(--space-4);
+  background: var(--color-surface);
+  border-radius: var(--radius);
+  &:focus { top: var(--space-2); }
+}
+
+.container {
+  width: min(100% - var(--gutter) * 2, var(--container));
+  margin-inline: auto;
+}
+.container--narrow { max-width: var(--container-narrow); }
+
+.section { padding-block: var(--space-7); }
+.section + .section { padding-top: 0; }
+
+.section-title {
+  font-size: var(--fs-xl);
+  margin-bottom: var(--space-5);
+}
+
+.page-title {
+  font-size: var(--fs-2xl);
+  margin-bottom: var(--space-5);
+}
+
+.section__more {
+  margin-top: var(--space-5);
+  text-align: right;
+  a { font-weight: 500; }
+}
+
+.empty { color: var(--color-text-muted); }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition: none !important; }
+}
+
+// 開発中に写真が見つからないときの仮の枠（本番ビルドではエラーになるので表示されない）
+.img-missing {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  padding: var(--space-4);
+  font-size: var(--fs-sm);
+  color: var(--color-accent-dark);
+  background: var(--color-accent-tint);
+  border: 1px dashed var(--color-accent);
+  border-radius: var(--radius);
+  text-align: center;
+}

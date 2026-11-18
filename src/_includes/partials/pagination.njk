@@ -1,0 +1,16 @@
+{# 使う側で current（現在のページ番号）, total（全ページ数）, base（例 "/articles/"）をセットする #}
+{% if total > 1 %}
+<nav class="pagination" aria-label="ページ送り">
+  <ul>
+    {% if current > 1 %}
+    <li><a href="{{ base }}{% if current - 1 > 1 %}page/{{ current - 1 }}/{% endif %}" rel="prev">前へ</a></li>
+    {% endif %}
+    {% for n in range(1, total + 1) %}
+    <li>{% if n == current %}<span aria-current="page">{{ n }}</span>{% else %}<a href="{{ base }}{% if n > 1 %}page/{{ n }}/{% endif %}">{{ n }}</a>{% endif %}</li>
+    {% endfor %}
+    {% if current < total %}
+    <li><a href="{{ base }}page/{{ current + 1 }}/" rel="next">次へ</a></li>
+    {% endif %}
+  </ul>
+</nav>
+{% endif %}

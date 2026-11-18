@@ -1,0 +1,21 @@
+---
+layout: layouts/base.njk
+title: 記事一覧
+pagination:
+  data: collections.articles
+  size: 9
+  alias: items
+permalink: "/articles/{% if pagination.pageNumber > 0 %}page/{{ pagination.pageNumber + 1 }}/{% endif %}"
+---
+<section class="container section">
+  <h1 class="page-title">記事一覧</h1>
+  {% set activeSlug = "" %}
+  {% include "partials/category-filter.njk" %}
+  <div class="card-grid">
+    {% asyncEach item in items %}{% include "partials/card.njk" %}{% endeach %}
+  </div>
+  {% set current = pagination.pageNumber + 1 %}
+  {% set total = pagination.pages.length %}
+  {% set base = "/articles/" %}
+  {% include "partials/pagination.njk" %}
+</section>

@@ -1,0 +1,345 @@
+@use "../base/tokens" as *;
+
+// ── 共通の小物 ─────────────────────────────
+.button {
+  display: inline-block;
+  padding: var(--space-3) var(--space-5);
+  font-weight: 700;
+  color: #fff;
+  text-decoration: none;
+  background: var(--color-accent);
+  border: 1px solid var(--color-accent);
+  border-radius: var(--radius);
+  &:hover { color: #fff; background: var(--color-accent-dark); border-color: var(--color-accent-dark); }
+}
+
+.button--ghost {
+  color: var(--color-accent);
+  background: var(--color-surface);
+  &:hover { color: #fff; }
+}
+
+:not(pre) > code {
+  padding: 1px 6px;
+  font-size: 0.9em;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  overflow-wrap: anywhere;
+}
+
+// ── ページの頭 ─────────────────────────────
+.how-hero {
+  padding-block: var(--space-8) var(--space-7);
+  background: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.how-hero__title {
+  font-size: var(--fs-3xl);
+  letter-spacing: 0.04em;
+}
+
+.how-hero__lead {
+  margin-top: var(--space-5);
+  font-size: var(--fs-lg);
+}
+
+.how-hero__note,
+.how-small {
+  margin-top: var(--space-3);
+  font-size: var(--fs-sm);
+  color: var(--color-text-muted);
+}
+
+.how-section { padding-top: var(--space-8); }
+.how-section__head { margin-inline: auto; margin-bottom: var(--space-5); }
+
+.how-subheading {
+  margin: var(--space-7) 0 var(--space-4);
+  font-size: var(--fs-lg);
+}
+
+.how-cta {
+  margin-top: var(--space-5);
+  text-align: center;
+}
+.how-cta--left { text-align: left; }
+
+// ── 作業時間の比較 ─────────────────────────
+.time-compare {
+  display: grid;
+  gap: var(--space-4);
+  margin: 0;
+}
+
+.time-compare__row {
+  display: grid;
+  gap: var(--space-1);
+
+  @include up($bp-sm) {
+    grid-template-columns: 11em 1fr;
+    align-items: center;
+    gap: var(--space-4);
+  }
+
+  dt { font-size: var(--fs-sm); font-weight: 500; }
+  dd { display: flex; align-items: center; gap: var(--space-3); margin: 0; }
+}
+
+.time-compare__bar {
+  flex: 0 0 auto;
+  width: calc((100% - 5em) * var(--ratio));
+  height: 20px;
+  border-radius: var(--radius-sm);
+}
+.time-compare__bar--manual { background: var(--color-border); }
+.time-compare__bar--ai { background: var(--color-accent); }
+
+.time-compare__value {
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+// ── 流れ ───────────────────────────────────
+.flow {
+  display: grid;
+  gap: var(--space-4);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  counter-reset: flow;
+
+  @include up($bp-sm) { grid-template-columns: repeat(2, 1fr); }
+  @include up($bp-lg) { grid-template-columns: repeat(4, 1fr); }
+}
+
+.flow__item {
+  position: relative;
+  counter-increment: flow;
+  padding: var(--space-5);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+
+  &::before {
+    content: counter(flow);
+    position: absolute;
+    top: var(--space-5);
+    right: var(--space-5);
+    font-size: var(--fs-xl);
+    font-weight: 700;
+    line-height: 1;
+    color: var(--color-border);
+  }
+
+  p { font-size: var(--fs-sm); }
+}
+
+.flow__who {
+  display: inline-block;
+  margin-bottom: var(--space-2) !important;
+  padding: 0 var(--space-2);
+  font-size: 0.75rem !important;
+  font-weight: 700;
+  color: var(--color-text-muted);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+}
+.flow__who--ai { color: #fff; background: var(--color-accent); border-color: var(--color-accent); }
+.flow__who--auto { color: var(--color-accent); border-color: var(--color-accent); }
+
+.flow__title {
+  margin-bottom: var(--space-2);
+  font-size: var(--fs-lg);
+}
+
+// ── 原稿と記事の比較 ───────────────────────
+.compare {
+  display: grid;
+  gap: var(--space-3);
+  align-items: stretch;
+
+  @include up($bp-lg) {
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+    gap: var(--space-4);
+  }
+}
+
+.compare__col {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  margin: 0;
+}
+
+.compare__label {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+  margin-bottom: var(--space-2);
+  font-size: var(--fs-sm);
+
+  code { background: transparent; border: 0; padding: 0; color: var(--color-text-muted); }
+}
+
+.compare__badge {
+  padding: 0 var(--space-2);
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--color-text);
+  background: var(--color-border);
+  border-radius: var(--radius-sm);
+}
+.compare__badge--ai { color: #fff; background: var(--color-accent); }
+
+.compare__meta { color: var(--color-text-muted); }
+
+.compare__code {
+  // 高さは制限しない（中だけスクロールする箱にすると、ページのスクロールが引っかかるため）
+  flex: 1;
+  margin: 0;
+  overflow-x: auto;
+  padding: var(--space-4);
+  font-family: ui-monospace, "SFMono-Regular", Consolas, "Noto Sans JP", monospace;
+  font-size: 0.8125rem;
+  line-height: 1.75;
+  white-space: pre-wrap;      // スマホでも横にはみ出さない
+  overflow-wrap: anywhere;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+}
+
+.compare__arrow {
+  display: grid;
+  place-items: center;
+
+  span {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-1) var(--space-3);
+    font-family: ui-monospace, Consolas, monospace;
+    font-size: var(--fs-sm);
+    font-weight: 700;
+    color: var(--color-accent);
+    border: 1px solid var(--color-accent);
+    border-radius: var(--radius-pill);
+    background: var(--color-surface);
+
+    &::after { content: "↓"; }
+    @include up($bp-lg) { &::after { content: "→"; } }
+  }
+}
+
+// ── 変換の対応表 ───────────────────────────
+.mapping {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--fs-sm);
+
+  th, td {
+    padding: var(--space-3) var(--space-2);
+    text-align: left;
+    vertical-align: top;
+    border-bottom: 1px solid var(--color-border);
+  }
+  thead th { font-size: 0.75rem; color: var(--color-text-muted); font-weight: 500; }
+  tbody th { width: 38%; font-weight: 500; }
+}
+
+// ── ターミナル風の表示 ─────────────────────
+.terminal {
+  margin: var(--space-5) 0 0;
+
+  figcaption {
+    margin-bottom: var(--space-2);
+    font-size: var(--fs-sm);
+    color: var(--color-text-muted);
+  }
+
+  pre {
+    margin: 0;
+    padding: var(--space-4);
+    overflow-x: auto;
+    font-family: ui-monospace, Consolas, "Noto Sans JP", monospace;
+    font-size: 0.8125rem;
+    line-height: 1.7;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+    color: #f3ede6;
+    background: #2a2522;
+    border-radius: var(--radius);
+  }
+}
+
+// ── ほかの例（開閉） ───────────────────────
+.example {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+
+  & + & { margin-top: var(--space-3); }
+
+  .compare { padding: 0 var(--space-4); }
+  .how-cta { padding-bottom: var(--space-5); }
+}
+
+.example__summary {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-1) var(--space-3);
+  padding: var(--space-4) var(--space-5);
+  cursor: pointer;
+  list-style: none;
+
+  &::-webkit-details-marker { display: none; }
+  &::before {
+    content: "+";
+    width: 1em;
+    font-weight: 700;
+    color: var(--color-accent);
+  }
+  [open] > &::before { content: "−"; }
+  [open] > & { border-bottom: 1px solid var(--color-border); margin-bottom: var(--space-4); }
+}
+
+.example__title { font-weight: 700; }
+.example__meta { font-size: var(--fs-sm); color: var(--color-text-muted); }
+
+// ── 工夫・技術 ─────────────────────────────
+.feature-list {
+  display: grid;
+  gap: var(--space-4);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+
+  @include up($bp-sm) { grid-template-columns: repeat(2, 1fr); }
+
+  li {
+    padding: var(--space-5);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+  }
+  h3 { margin-bottom: var(--space-2); font-size: var(--fs-base); }
+  p { font-size: var(--fs-sm); }
+}
+
+.tech-list {
+  margin: 0 0 var(--space-5);
+
+  div {
+    display: grid;
+    gap: var(--space-1);
+    padding: var(--space-3) 0;
+    border-bottom: 1px solid var(--color-border);
+    @include up($bp-sm) { grid-template-columns: 10em 1fr; gap: var(--space-4); }
+  }
+  dt { font-size: var(--fs-sm); font-weight: 700; }
+  dd { margin: 0; }
+}

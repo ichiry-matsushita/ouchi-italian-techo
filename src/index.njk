@@ -1,0 +1,33 @@
+---
+layout: layouts/base.njk
+title: トップ
+---
+<section class="hero">
+  <div class="container">
+    <p class="hero__eyebrow">家庭のイタリア料理のレシピ帖</p>
+    <h1 class="hero__title">{{ site.name }}</h1>
+    <p class="hero__lead">{{ site.description }}</p>
+  </div>
+</section>
+
+<section class="container section" aria-labelledby="latest-heading">
+  <h2 id="latest-heading" class="section-title">新着記事</h2>
+  <div class="card-grid">
+    {% asyncEach item in collections.articles | head(3) %}{% include "partials/card.njk" %}{% endeach %}
+  </div>
+  <p class="section__more"><a href="/articles/">記事一覧へ</a></p>
+</section>
+
+<section class="container section" aria-labelledby="category-heading">
+  <h2 id="category-heading" class="section-title">カテゴリから探す</h2>
+  <ul class="category-list">
+    {% for cat in site.categories %}
+    <li>
+      <a href="/articles/{{ cat.slug }}/">
+        <span class="category-list__name">{{ cat.name }}</span>
+        <span class="category-list__note">{{ cat.note }}</span>
+      </a>
+    </li>
+    {% endfor %}
+  </ul>
+</section>

@@ -1,0 +1,50 @@
+// デザインの基本値。色・余白・角丸はここだけで決める。
+// アクセントカラーはトマトの赤 1色のみ。
+
+$bp-sm: 600px;
+$bp-md: 768px;
+$bp-lg: 1024px;
+
+@mixin up($bp) {
+  @media (min-width: $bp) { @content; }
+}
+
+:root {
+  // 色
+  --color-bg: #fbf8f3;          // ごく薄い生成り色
+  --color-surface: #ffffff;
+  --color-text: #2a2522;
+  --color-text-muted: #6b625b;
+  --color-border: #e8e1d7;
+  --color-accent: #b23a26;      // トマトの赤（生成り背景で文字色として 5:1 以上）
+  --color-accent-dark: #8f2c1b;
+  --color-accent-tint: #f6ebe4; // ポイント枠など、ごく淡い面
+
+  // 文字
+  --font-sans: "Noto Sans JP", "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic", "Meiryo", sans-serif;
+  --fs-sm: 0.875rem;
+  --fs-base: 1rem;
+  --fs-lg: 1.125rem;
+  --fs-xl: 1.375rem;
+  --fs-2xl: clamp(1.5rem, 1.2rem + 1.5vw, 2.125rem);
+  --fs-3xl: clamp(1.75rem, 1.3rem + 2.2vw, 2.75rem);
+
+  // 余白
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+  --space-8: 64px;
+
+  // 形
+  --radius-sm: 4px;
+  --radius: 8px;
+  --radius-pill: 999px;
+
+  --container: 1080px;
+  --container-narrow: 720px;
+  --gutter: 16px;
+}

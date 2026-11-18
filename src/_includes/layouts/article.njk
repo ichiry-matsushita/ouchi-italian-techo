@@ -1,0 +1,42 @@
+---
+layout: layouts/base.njk
+---
+<article class="article">
+  <header class="article__header container container--narrow">
+    <p class="article__meta">
+      <a class="article__category" href="/articles/{{ category | categorySlug }}/">{{ category }}</a>
+      <time datetime="{{ page.date | isoDate }}">{{ page.date | jpDate }}</time>
+    </p>
+    <h1 class="article__title">{{ title }}</h1>
+    <dl class="article__facts">
+      <div><dt>調理時間</dt><dd>{{ cookingTime }}分</dd></div>
+      <div><dt>分量</dt><dd>{{ servings }}人分</dd></div>
+      {% if region %}<div><dt>発祥</dt><dd>{{ region }}</dd></div>{% endif %}
+    </dl>
+    {% if tags %}
+    <ul class="article__tags">
+      {% for t in tags %}<li>#{{ t }}</li>{% endfor %}
+    </ul>
+    {% endif %}
+  </header>
+
+  {% if eyecatch %}
+  <div class="article__eyecatch container">
+    {% articleImage eyecatch, eyecatchAlt, page.inputPath, "eyecatch" %}
+  </div>
+  {% endif %}
+
+  <div class="article__body container container--narrow">
+    {{ content | safe }}
+  </div>
+
+  {% set related = collections.articles | relatedArticles(category, page.url, 3) %}
+  {% if related.length %}
+  <section class="related container" aria-labelledby="related-heading">
+    <h2 id="related-heading" class="section-title">同じカテゴリの記事</h2>
+    <div class="card-grid">
+      {% asyncEach item in related %}{% include "partials/card.njk" %}{% endeach %}
+    </div>
+  </section>
+  {% endif %}
+</article>

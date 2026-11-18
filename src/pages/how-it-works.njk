@@ -1,0 +1,217 @@
+---
+layout: layouts/base.njk
+title: このサイトの仕組み
+description: メモ書きの原稿と写真をフォルダに入れてコマンドを1つ実行すると、テンプレートに沿った記事ができあがります。実際の原稿と完成した記事を並べて紹介します。
+permalink: /how-it-works/
+---
+{% set featured = null %}
+{% for ex in examples %}{% if ex.slug == "amatriciana" %}{% set featured = ex %}{% endif %}{% endfor %}
+{% if not featured %}{% set featured = examples[0] %}{% endif %}
+
+<article class="how">
+  <header class="how-hero">
+    <div class="container container--narrow">
+      <p class="hero__eyebrow">このサイトの仕組み</p>
+      <h1 class="how-hero__title">メモ書きの原稿から、<br>記事ができるまで</h1>
+      <p class="how-hero__lead">
+        このサイトの記事は、料理のメモ書きと写真をフォルダに入れて、コマンドを1つ実行するだけで作っています。
+        AI（Claude Code）が決まったルールに沿って原稿を記事の形に整え、チェックを通ったものだけを公開します。
+      </p>
+      <p class="how-hero__note">
+        ポートフォリオ用のデモサイトです。実際の業務で作った仕組みを、架空の内容で再現しています。
+      </p>
+    </div>
+  </header>
+
+  {# ── 作業時間 ─────────────────────── #}
+  <section class="container container--narrow how-section" aria-labelledby="h-time">
+    <h2 id="h-time" class="section-heading">1記事あたりの作業時間</h2>
+    <dl class="time-compare">
+      <div class="time-compare__row">
+        <dt>人の手で作る場合</dt>
+        <dd><span class="time-compare__bar time-compare__bar--manual" style="--ratio: 1"></span><span class="time-compare__value">約4時間</span></dd>
+      </div>
+      <div class="time-compare__row">
+        <dt>この仕組みで作る場合</dt>
+        <dd><span class="time-compare__bar time-compare__bar--ai" style="--ratio: 0.25"></span><span class="time-compare__value">約1時間</span></dd>
+      </div>
+    </dl>
+    <p class="how-small">実際の業務で、この仕組みを使って短縮できた時間です。</p>
+  </section>
+
+  {# ── 流れ ─────────────────────────── #}
+  <section class="container how-section" aria-labelledby="h-flow">
+    <div class="container--narrow how-section__head">
+      <h2 id="h-flow" class="section-heading">記事ができるまでの流れ</h2>
+    </div>
+    <ol class="flow">
+      <li class="flow__item">
+        <p class="flow__who">人</p>
+        <h3 class="flow__title">原稿と写真を置く</h3>
+        <p>メモ書きの原稿 <code>draft.txt</code> と写真を、<code>drafts/</code> のフォルダに入れます。箇条書きや話し言葉のままで大丈夫です。</p>
+      </li>
+      <li class="flow__item">
+        <p class="flow__who flow__who--ai">AI</p>
+        <h3 class="flow__title">コマンドで記事にする</h3>
+        <p><code>/new-article</code> を実行すると、AIが変換ルールに沿って記事ファイルを作ります。写真は位置情報を消してから取り込みます。</p>
+      </li>
+      <li class="flow__item">
+        <p class="flow__who flow__who--auto">自動</p>
+        <h3 class="flow__title">チェックする</h3>
+        <p>必須項目、カテゴリ、見出しの順番、画像の代替テキスト、書き残し（TODO）をスクリプトで確認します。</p>
+      </li>
+      <li class="flow__item">
+        <p class="flow__who">人</p>
+        <h3 class="flow__title">確認して公開する</h3>
+        <p>TODO を埋めて内容を確認し、GitHub に送ると自動で公開されます。チェックを通らないと公開されません。</p>
+      </li>
+    </ol>
+  </section>
+
+  {# ── 実例 ─────────────────────────── #}
+  {% if featured %}
+  <section class="container how-section" aria-labelledby="h-example">
+    <div class="container--narrow how-section__head">
+      <h2 id="h-example" class="section-heading">実際の原稿と、できあがった記事</h2>
+      <p>「{{ featured.title }}」の例です。左が人が書いた原稿、右がAIが作った記事ファイルです。</p>
+    </div>
+
+    <div class="compare">
+      <figure class="compare__col">
+        <figcaption class="compare__label">
+          <span class="compare__badge">原稿</span>
+          <code>drafts/{{ featured.folder }}/draft.txt</code>
+          <span class="compare__meta">{{ featured.draftLines }}行・写真{{ featured.photos }}枚</span>
+        </figcaption>
+        <pre class="compare__code" tabindex="0"><code>{{ featured.draft | escape }}</code></pre>
+      </figure>
+
+      <div class="compare__arrow" aria-hidden="true"><span>/new-article</span></div>
+
+      <figure class="compare__col">
+        <figcaption class="compare__label">
+          <span class="compare__badge compare__badge--ai">記事ファイル</span>
+          <code>src/articles/{{ featured.slug }}/index.md</code>
+          <span class="compare__meta">{{ featured.articleLines }}行</span>
+        </figcaption>
+        <pre class="compare__code" tabindex="0"><code>{{ featured.article | escape }}</code></pre>
+      </figure>
+    </div>
+
+    <p class="how-cta"><a class="button" href="{{ featured.url }}">完成したページを見る</a></p>
+
+    <div class="container--narrow">
+      <h3 class="how-subheading">変換で行っていること</h3>
+      <table class="mapping">
+        <thead><tr><th scope="col">原稿</th><th scope="col">記事</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">料理名、何人分、メモの内容</th><td>タイトル・説明文・カテゴリ・タグなど（フロントマター）</td></tr>
+          <tr><th scope="row">作ってみたきっかけ</th><td>リード文</td></tr>
+          <tr><th scope="row">材料のメモ（「なければ○○」）</th><td>材料表。代わりの食材は「代わりに：」として添える</td></tr>
+          <tr><th scope="row">作り方の箇条書き</th><td>番号つきの手順。1手順を1〜3文に分ける</td></tr>
+          <tr><th scope="row">写真（番号順）</th><td>1枚目をアイキャッチ、2枚目以降を対応する手順に。AIが写真を見て代替テキストを書く</td></tr>
+          <tr><th scope="row">「コツ」のメモ</th><td>ポイント枠。コツごとに見出しをつける</td></tr>
+          <tr><th scope="row">話し言葉</th><td>です・ます調の短い文</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+  {% endif %}
+
+  {# ── 書いていないことは作らない ───────── #}
+  <section class="container container--narrow how-section" aria-labelledby="h-todo">
+    <h2 id="h-todo" class="section-heading">原稿にないことは、AIに作らせない</h2>
+    <p>
+      分量や時間を推測で埋めると、もっともらしい間違いが記事に入ってしまいます。
+      そこで変換ルールでは「原稿に書かれていないことは作らず、<code>TODO:</code> を付けて残す」と決めています。
+    </p>
+    <p>
+      上のアマトリチャーナの原稿には、合計の調理時間がなく、ペコリーノの分量も「たっぷり」としか書かれていませんでした。
+      AIはこの2か所を TODO として残し、チェックで止まったところを人が埋めてから公開しています。
+    </p>
+    <figure class="terminal">
+      <figcaption>記事を作った直後のチェック結果</figcaption>
+<pre tabindex="0"><code>$ npm run check:articles -- amatriciana
+
+記事のチェック（1 本）
+
+  NG  src/articles/amatriciana/index.md
+      エラー  index.md:7   TODO が残っています：TODO: 調理時間が原稿にありません（炒め5分＋煮込み10分＋パスタのゆで時間）
+      エラー  index.md:23  TODO が残っています：TODO: 分量（原稿は「たっぷり」）
+
+エラー 2 件／注意 0 件
+エラーを直してから公開してください。</code></pre>
+    </figure>
+  </section>
+
+  {# ── ほかの例 ─────────────────────── #}
+  {% set others = [] %}
+  {% for ex in examples %}{% if ex.slug != featured.slug %}{% set others = (others.push(ex), others) %}{% endif %}{% endfor %}
+  {% if others.length %}
+  <section class="container how-section" aria-labelledby="h-more">
+    <div class="container--narrow how-section__head">
+      <h2 id="h-more" class="section-heading">ほかの例</h2>
+    </div>
+    {% for ex in others %}
+    <details class="example">
+      <summary class="example__summary">
+        <span class="example__title">{{ ex.title }}</span>
+        <span class="example__meta">原稿 {{ ex.draftLines }}行・写真{{ ex.photos }}枚</span>
+      </summary>
+      <div class="compare compare--inner">
+        <figure class="compare__col">
+          <figcaption class="compare__label"><span class="compare__badge">原稿</span><code>drafts/{{ ex.folder }}/draft.txt</code></figcaption>
+          <pre class="compare__code" tabindex="0"><code>{{ ex.draft | escape }}</code></pre>
+        </figure>
+        <div class="compare__arrow" aria-hidden="true"><span>/new-article</span></div>
+        <figure class="compare__col">
+          <figcaption class="compare__label"><span class="compare__badge compare__badge--ai">記事ファイル</span><code>src/articles/{{ ex.slug }}/index.md</code></figcaption>
+          <pre class="compare__code" tabindex="0"><code>{{ ex.article | escape }}</code></pre>
+        </figure>
+      </div>
+      <p class="how-cta"><a class="button button--ghost" href="{{ ex.url }}">完成したページを見る</a></p>
+    </details>
+    {% endfor %}
+  </section>
+  {% endif %}
+
+  {# ── 品質と安全 ───────────────────── #}
+  <section class="container container--narrow how-section" aria-labelledby="h-quality">
+    <h2 id="h-quality" class="section-heading">見た目と品質をそろえる工夫</h2>
+    <ul class="feature-list">
+      <li>
+        <h3>記事の型を部品で固定</h3>
+        <p>材料・手順・ポイントなどの部品（ショートコード）が見出しを自動で出すので、どの記事も同じ順番・同じ見た目になります。</p>
+      </li>
+      <li>
+        <h3>チェックを通らないと公開しない</h3>
+        <p>GitHub に送ると自動でチェックが動き、問題があれば公開を止めます。どの記事の何行目が問題かを一覧で表示します。</p>
+      </li>
+      <li>
+        <h3>写真の位置情報を消す</h3>
+        <p>スマホの写真には撮影場所が記録されています。記事に取り込む時点で消し、公開用の画像は WebP に変換・リサイズします。</p>
+      </li>
+      <li>
+        <h3>ルールは文章で管理</h3>
+        <p>AIへの指示（変換ルール）はプロンプトのファイルにまとめ、うまくいかなかった点を見つけるたびに書き足しています。</p>
+      </li>
+    </ul>
+  </section>
+
+  {# ── 技術 ─────────────────────────── #}
+  <section class="container container--narrow how-section" aria-labelledby="h-tech">
+    <h2 id="h-tech" class="section-heading">使っている技術</h2>
+    <dl class="tech-list">
+      <div><dt>サイトの生成</dt><dd>Eleventy（11ty）、Nunjucks</dd></div>
+      <div><dt>スタイル</dt><dd>SCSS（Sass）</dd></div>
+      <div><dt>画像</dt><dd>@11ty/eleventy-img（WebP 変換・リサイズ）、sharp（メタデータ削除）</dd></div>
+      <div><dt>記事の自動作成</dt><dd>Claude Code のカスタムコマンド、変換ルールのプロンプト</dd></div>
+      <div><dt>チェック</dt><dd>Node.js のスクリプト</dd></div>
+      <div><dt>公開</dt><dd>GitHub Actions、GitHub Pages</dd></div>
+    </dl>
+    <p>このサイト自体も、Claude Code を使って制作しました。JavaScript は使っておらず、HTML と CSS だけで動きます。</p>
+    {% if site.repoUrl %}
+    <p class="how-cta how-cta--left"><a class="button button--ghost" href="{{ site.repoUrl }}">GitHub でソースを見る</a></p>
+    {% endif %}
+  </section>
+</article>

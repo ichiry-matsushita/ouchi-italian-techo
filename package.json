@@ -1,0 +1,25 @@
+{
+  "name": "ouchi-italian-techo",
+  "version": "0.1.0",
+  "description": "おうちイタリアン手帖 — Eleventy で作るレシピコラムのデモサイト（ポートフォリオ用）",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build:css": "sass src/scss/main.scss _site/css/main.css --style=compressed --no-source-map",
+    "watch:css": "sass src/scss/main.scss _site/css/main.css --watch",
+    "build:html": "eleventy",
+    "serve:html": "eleventy --serve",
+    "build": "run-s build:html build:css",
+    "start": "run-p serve:html watch:css",
+    "check:articles": "node scripts/check-articles.js"
+  },
+  "devDependencies": {
+    "@11ty/eleventy": "^3.1.8",
+    "@11ty/eleventy-img": "^7.1.1",
+    "js-yaml": "^4.3.2",
+    "markdown-it": "^14.3.3",
+    "npm-run-all2": "^8.0.4",
+    "sass": "^1.108.2",
+    "sharp": "^0.35.5"
+  }
+}

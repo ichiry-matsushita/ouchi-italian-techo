@@ -1,0 +1,6 @@
+# 改行コードを LF にそろえる（Windows と GitHub Actions で差が出ないように）
+* text=auto eol=lf
+*.jpg binary
+*.jpeg binary
+*.png binary
+*.webp binary

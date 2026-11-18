@@ -1,0 +1,14 @@
+<header class="site-header">
+  <div class="container site-header__inner">
+    <a class="site-logo" href="/">{{ site.name }}</a>
+    <nav class="site-nav" aria-label="メインメニュー">
+      <ul>
+        <li><a href="/articles/">記事一覧</a></li>
+        {% for cat in site.categories %}
+        <li><a href="/articles/{{ cat.slug }}/">{{ cat.name }}</a></li>
+        {% endfor %}
+        <li class="site-nav__how"><a href="/how-it-works/">このサイトの仕組み</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
